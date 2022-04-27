@@ -1,5 +1,4 @@
-import Match from "./match.js";
-export default class Round {
+class Round {
   constructor() {
     this.matches = [];
   }
@@ -8,10 +7,10 @@ export default class Round {
       teams.push("Bye");
     }
     let IsSecond = false;
-    // if (round >= teams.length) {
-    //   IsSecond = true;
-    //   round -= ListTeam.length;
-    // }
+    if (round >= teams.length - 1) {
+      IsSecond = true;
+      round -= teams.length - 1;
+    }
     let halfSize = teams.length / 2;
     let teamsCopied = [...teams]; // Copy all the elements.
     teamsCopied.shift();
@@ -19,15 +18,14 @@ export default class Round {
     let teamsSize = teamsCopied.length;
 
     let teamIdx = round % teamsSize;
-    console.log(teamIdx);
 
-    this.result.push(new Match(teamsCopied[teamIdx], teams[0], IsSecond));
+    this.matches.push(new Match(teamsCopied[teamIdx], teams[0], IsSecond));
 
     for (var idx = 1; idx < halfSize; idx++) {
       let firstTeam = (round + idx) % teamsSize;
       let secondTeam = (round + teamsSize - idx) % teamsSize;
 
-      this.result.push(
+      this.matches.push(
         new Match(teamsCopied[firstTeam], teamsCopied[secondTeam], IsSecond)
       );
     }
